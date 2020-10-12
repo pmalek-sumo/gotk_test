@@ -1,3 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: sumologic
+  namespace: gotk-system
+spec:
+  interval: 1m
+  url: https://sumologic.github.io/sumologic-kubernetes-collection
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -5,7 +13,7 @@ metadata:
   name: sumologic
   namespace: monitoring
 spec:
-  interval: 1h0m0s
+  interval: 1m0s
   releaseName: sumologic
   targetNamespace: monitoring
   chart:
@@ -18,7 +26,8 @@ spec:
         name: sumologic
         namespace: gotk-system
   values:
-    # Falco settings: https://github.com/SumoLogic/sumologic-kubernetes-collection/blob/master/deploy/helm/sumologic/values.yaml#L1376
+    # Falco settings:
+    # https://github.com/SumoLogic/sumologic-kubernetes-collection/blob/master/deploy/helm/sumologic/values.yaml#L1376
     falco:
       enabled: false
     # This is using the kube-prometheus-stack chart
@@ -29,8 +38,8 @@ spec:
       nodeExporter:
         enabled: true
       prometheus-node-exporter:
-        # If you have another prometheus node exporter running, it is probably on port 9100.  This sets
-        # The port to another port so they dont collide
+        # If you have another prometheus node exporter running, it is probably on port 9100.
+        # This sets the port to another port so they dont collide
         service:
           port: 49100
           targetPort: 49100
