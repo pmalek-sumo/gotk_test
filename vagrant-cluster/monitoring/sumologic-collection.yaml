@@ -26,6 +26,9 @@ spec:
         name: sumologic
         namespace: gotk-system
   values:
+    sumologic:
+      accessId: "x"
+      accessKey: "x"
     # Falco settings:
     # https://github.com/SumoLogic/sumologic-kubernetes-collection/blob/master/deploy/helm/sumologic/values.yaml#L1376
     falco:
